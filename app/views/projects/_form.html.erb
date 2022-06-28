@@ -1,0 +1,29 @@
+<%= form_with(model: project) do |form| %>
+  <% if project.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% project.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label '案件名', style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label '最低稼働日数', style: "display: block" %>
+    <%= form.collection_select :working_day_min, Project.working_day_mins, :first, :first,{prompt: "未選択"} %>
+    〜
+    <%= form.collection_select :working_day_max, Project.working_day_maxes, :first, :first,{prompt: "未選択"} %>
+  </div>
+
+  <div>
+    <%= form.submit '作成' %>
+  </div>
+<% end %>
